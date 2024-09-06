@@ -16,7 +16,22 @@ class CourseApi{
       return data;
     }catch (e){
       print('Division fetch failed: $e');
-      // Return an empty list on error
+      return [];
+    }
+  }
+
+  void divisions() async {
+    try{
+      final uri = Uri.parse('https://flutter-codelabs-api.onrender.com/api/division');
+      final response = await http.get(uri);
+      final bodyData = response.body;
+      final jsonData = jsonDecode(bodyData) as List<dynamic>;
+      final data = jsonData.map((d){
+        return Division.fromMap(d);
+      }).toList();
+      // return data;
+    }catch (e){
+      print('Division fetch failed: $e');
       return [];
     }
   }

@@ -1,11 +1,12 @@
+import 'package:code_labs/model/category.dart';
 import 'package:flutter/material.dart';
 
 import 'grid_item.dart';
 
 class CategoryView extends StatelessWidget {
-  final String title;
-  final List items;
-  const CategoryView({super.key, required this.items, required this.title});
+  final String name;
+  final List<Category> items;
+  const CategoryView({super.key, required this.items, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class CategoryView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-              title,
+              name,
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600
@@ -33,7 +34,11 @@ class CategoryView extends StatelessWidget {
                 mainAxisSpacing: 10
             ),
             itemBuilder: (BuildContext context, index) {
-              return GridItem(title: items[index]['title'], image: items[index]['image']);
+              return GridItem(
+                  id :  items[index].id,
+                  name: items[index].name,
+                  image: items[index].image
+              );
             },
           )
         ],

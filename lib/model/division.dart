@@ -11,7 +11,10 @@ class Division{
   });
 
   factory Division.fromMap(Map<String,dynamic> d){
-    final List<Category> categories = Category.fromMap(d['categories']) as dynamic;
+    final categories = (d['categories'] as List<dynamic>).map((cat) {
+      return Category.fromMap(cat as Map<String, dynamic>);
+    }).toList();
+
     return Division(
         id: d['_id'],
         name: d['name'],

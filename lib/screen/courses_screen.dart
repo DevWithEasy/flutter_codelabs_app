@@ -1,10 +1,16 @@
 import 'package:code_labs/screen/videos_screen.dart';
 import 'package:flutter/material.dart';
 
-class CoursesScreen extends StatelessWidget {
+class CoursesScreen extends StatefulWidget {
+  final String id;
   final String title;
-  CoursesScreen({super.key, required this.title});
+  const CoursesScreen({super.key, required this.title, required this.id});
 
+  @override
+  State<CoursesScreen> createState() => _CoursesScreenState();
+}
+
+class _CoursesScreenState extends State<CoursesScreen> {
   final List courses = [
     {
       "id": 1,
@@ -40,9 +46,10 @@ class CoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.id);
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
@@ -71,7 +78,7 @@ class CoursesScreen extends StatelessWidget {
                       color: Colors.grey.shade200,
                       blurRadius: 5,
                       spreadRadius: 2,
-                      offset: Offset(0, 1),
+                      offset: const Offset(0, 1),
                     ),
                   ],
                 ),

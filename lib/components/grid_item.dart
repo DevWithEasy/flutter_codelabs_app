@@ -1,16 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:code_labs/screen/courses_screen.dart';
 import 'package:flutter/material.dart';
 
 class GridItem extends StatelessWidget {
-  final String title;
+  final String id;
+  final String name;
   final String image;
-  const GridItem({super.key, required this.title, required this.image});
+  const GridItem({super.key, required this.name, required this.image, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoursesScreen(title: title)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CoursesScreen(title: name, id: id)));
       },
       child: Container(
         padding: const EdgeInsets.all(8.0),
@@ -30,12 +32,14 @@ class GridItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Image.asset(
-                image
+              child: CachedNetworkImage(
+                imageUrl: 'https://flutter-codelabs-api.onrender.com$image',
+                placeholder: (context, url) => const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             const SizedBox(height: 8),
-            Text(title),
+            Text(name),
           ],
         ),
       ),
