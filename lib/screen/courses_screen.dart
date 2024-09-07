@@ -39,7 +39,8 @@ class _CoursesScreenState extends State<CoursesScreen> {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
-      body: Padding(
+      body: loading ?
+      const CircularProgressIndicator() : Padding(
         padding: const EdgeInsets.all(12),
         child: ListView.separated(
           itemCount: courses.length,
@@ -50,6 +51,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                   MaterialPageRoute(
                     builder: (context) => VideosScreen(
                       title: courses[index].name,
+                      id : courses[index].id
                     ),
                   ),
                 );
@@ -73,12 +75,12 @@ class _CoursesScreenState extends State<CoursesScreen> {
                   children: [
                     Column(
                       children: [
-                        // Image.asset(
-                        //   courses[index],
-                        //   height: 50,
-                        //   width: 50,
-                        //   fit: BoxFit.cover,
-                        // ),
+                        Image.network(
+                          'https://flutter-codelabs-api.onrender.com${courses[index].image}',
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        ),
                         const SizedBox(height: 8),
                         Container(
                           padding: const EdgeInsets.only(left: 4, right: 4),

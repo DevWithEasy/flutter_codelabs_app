@@ -9,4 +9,12 @@ class Video{
     required this.videoId,
     required this.isComplete
 });
+  factory Video.fromMap(Map<String,dynamic> video){
+    return Video(
+      orderNo: video['orderNo'].toString(),
+      course: video['course'],
+      videoId: video['videoId'],
+      isComplete: video['isComplete']
+    );
+  }
 }

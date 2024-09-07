@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:code_labs/model/course.dart';
 import 'package:code_labs/model/division.dart';
+import 'package:code_labs/model/video.dart';
 import 'package:http/http.dart' as http;
 
 class CourseApi{
@@ -33,6 +34,22 @@ class CourseApi{
       return data;
     }catch (e){
       print('Division fetch failed: $e');
+      return [];
+    }
+  }
+
+  static Future<List<Video>> videos(String id) async {
+    try{
+      final uri = Uri.parse('https://flutter-codelabs-api.onrender.com/api/video/$id');
+      final response = await http.get(uri);
+      final bodyData = response.body;
+      final jsonData = jsonDecode(bodyData) as List<dynamic>;
+      final data = jsonData.map((video){
+        return Video.fromMap(video);
+      }).toList();
+      return data;
+    }catch (e){
+      print('Video fetch failed: $e');
       return [];
     }
   }

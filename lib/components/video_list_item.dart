@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoListItem extends StatefulWidget {
-  final String videoUrl;
+  final String videoId;
   final int lesson;
-  const VideoListItem({super.key, required this.videoUrl, required this.lesson});
+  const VideoListItem({super.key, required this.videoId, required this.lesson});
 
   @override
   State<VideoListItem> createState() => _VideoListItemState();
@@ -16,9 +16,8 @@ class _VideoListItemState extends State<VideoListItem> {
 
   @override
   void initState() {
-    videoId = YoutubePlayer.convertUrlToId(widget.videoUrl)!;
     _controller = YoutubePlayerController(
-        initialVideoId: videoId,
+        initialVideoId: widget.videoId,
         flags: const YoutubePlayerFlags(
           autoPlay: false,
           mute: true,

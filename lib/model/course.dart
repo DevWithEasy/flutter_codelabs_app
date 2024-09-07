@@ -4,14 +4,14 @@ class Course{
   final String instructor;
   final String language;
   final String lesson;
-  final String category;
+  final String image;
   Course({
     required this.id,
     required this.name,
     required this.instructor,
     required this.language,
     required this.lesson,
-    required this.category,
+    required this.image,
 });
   factory Course.fromMap(Map<String,dynamic> course){
     return Course(
@@ -20,7 +20,7 @@ class Course{
         instructor: course['instructor'],
         language: course['language'],
         lesson: course['lesson'].toString(),
-        category: course['category']
+        image: course['category']['image']
     );
   }
 }
