@@ -1,4 +1,6 @@
+import 'package:code_labs/model/course.dart';
 import 'package:code_labs/screen/videos_screen.dart';
+import 'package:code_labs/service/course_api.dart';
 import 'package:flutter/material.dart';
 
 class CoursesScreen extends StatefulWidget {
@@ -11,42 +13,26 @@ class CoursesScreen extends StatefulWidget {
 }
 
 class _CoursesScreenState extends State<CoursesScreen> {
-  final List courses = [
-    {
-      "id": 1,
-      "cat_id": 1,
-      "cat_image": "assets/images/js.png",
-      "title": "Javascript for beginners to advance",
-      "instructor": "Anisul Islam",
-      "language": "Bangla",
-      "duration": "5 hours",
-      "lesson": "25"
-    },
-    {
-      "id": 2,
-      "cat_id": 1,
-      "cat_image": "assets/images/js.png",
-      "title": "Complete beginners Course deep dive learning",
-      "instructor": "Sumit Saha",
-      "language": "English",
-      "duration": "6 hours",
-      "lesson": "45"
-    },
-    {
-      "id": 3,
-      "cat_id": 1,
-      "cat_image": "assets/images/js.png",
-      "title": "Complete basic to advance javascript",
-      "instructor": "Hasan",
-      "language": "Hindi",
-      "duration": "10 hours",
-      "lesson": "200"
-    }
-  ];
+  late List<Course> courses = [];
+  bool loading = false;
+
+  @override
+  void initState() {
+    fetchCourses();
+    super.initState();
+  }
+
+  void fetchCourses()async{
+    loading = true;
+    final data = await CourseApi.courses(widget.id);
+    setState(() {
+      courses = data;
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.id);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -63,7 +49,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => VideosScreen(
-                      title: courses[index]['title'],
+                      title: courses[index].name,
                     ),
                   ),
                 );
@@ -87,12 +73,12 @@ class _CoursesScreenState extends State<CoursesScreen> {
                   children: [
                     Column(
                       children: [
-                        Image.asset(
-                          courses[index]['cat_image'],
-                          height: 50,
-                          width: 50,
-                          fit: BoxFit.cover,
-                        ),
+                        // Image.asset(
+                        //   courses[index],
+                        //   height: 50,
+                        //   width: 50,
+                        //   fit: BoxFit.cover,
+                        // ),
                         const SizedBox(height: 8),
                         Container(
                           padding: const EdgeInsets.only(left: 4, right: 4),
@@ -100,7 +86,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                             color: Colors.green.shade50,
                           ),
                           child: Text(
-                            courses[index]['language'],
+                            courses[index].language,
                             style: const TextStyle(
                                 color: Colors.green, fontSize: 12),
                           ),
@@ -113,20 +99,16 @@ class _CoursesScreenState extends State<CoursesScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            courses[index]['title'],
+                            courses[index].name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            'Instructor: ${courses[index]['instructor']}',
+                            'Instructor: ${courses[index].instructor}',
                             style: TextStyle(color: Colors.grey.shade600),
                           ),
                           Text(
-                            'Duration: ${courses[index]['duration']}',
-                            style: TextStyle(color: Colors.grey.shade600),
-                          ),
-                          Text(
-                            'Lesson: ${courses[index]['lesson']}',
+                            'Lesson: ${courses[index].lesson}',
                             style: TextStyle(color: Colors.grey.shade600),
                           ),
                         ],
