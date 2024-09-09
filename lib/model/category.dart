@@ -13,6 +13,7 @@ class Category{
     required this.courses
   });
 
+
   factory Category.fromMap(Map<String,dynamic> cat){
     return Category(
         id: cat['_id'],

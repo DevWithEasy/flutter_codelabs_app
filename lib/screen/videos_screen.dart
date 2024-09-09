@@ -1,8 +1,10 @@
 import 'package:code_labs/components/video_list_item.dart';
+import 'package:code_labs/components/video_skelton.dart';
 import 'package:code_labs/model/video.dart';
 import 'package:code_labs/service/course_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -22,6 +24,7 @@ class _VideosScreenState extends State<VideosScreen> {
 
   late List<Video> videos = [];
   bool loading = false;
+  int videoCount = 0;
 
   @override
   void initState(){
@@ -36,6 +39,7 @@ class _VideosScreenState extends State<VideosScreen> {
       videoId = data[0].videoId;
       videos = data;
       loading = false;
+      videoCount = data.length;
     });
     _controller = YoutubePlayerController(
       initialVideoId: data[0].videoId,
@@ -62,7 +66,25 @@ class _VideosScreenState extends State<VideosScreen> {
         foregroundColor: Colors.white,
       ),
       body: loading ?
-      const CircularProgressIndicator(): Padding(
+      const VideoSkelton():
+      !loading && videoCount==0 ?
+      SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Lottie.asset(
+                'assets/animation/uploading.json',
+                width: 200,
+                height: 200
+            ),
+            const Text('No course added')
+          ],
+        ),
+      ):
+      Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

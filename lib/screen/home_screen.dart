@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:code_labs/components/category_view.dart';
 import 'package:code_labs/model/division.dart';
 import 'package:code_labs/service/course_api.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -20,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+
   void fetchDivision()async{
     loading = true;
     final data = await CourseApi.divisions();
@@ -32,13 +36,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: loading ? null :  AppBar(
         title: const Text('Code Labs'),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
+        centerTitle: true,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: loading ?
+        Center(
+            child: Lottie.asset(
+                'assets/animation/coding.json',
+                width: 200,
+                height: 200,
+                fit: BoxFit.fill,
+            )
+        )
+            :
+        SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -52,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                loading ? const CircularProgressIndicator() :
                 ListView.builder(
                     primary: false,
                     shrinkWrap: true,

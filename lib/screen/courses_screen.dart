@@ -1,7 +1,9 @@
+import 'package:code_labs/components/course_skelton.dart';
 import 'package:code_labs/model/course.dart';
 import 'package:code_labs/screen/videos_screen.dart';
 import 'package:code_labs/service/course_api.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class CoursesScreen extends StatefulWidget {
   final String id;
@@ -15,6 +17,7 @@ class CoursesScreen extends StatefulWidget {
 class _CoursesScreenState extends State<CoursesScreen> {
   late List<Course> courses = [];
   bool loading = false;
+  int courseCount = 0;
 
   @override
   void initState() {
@@ -28,6 +31,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
     setState(() {
       courses = data;
       loading = false;
+      courseCount = data.length;
     });
   }
 
@@ -40,7 +44,25 @@ class _CoursesScreenState extends State<CoursesScreen> {
         foregroundColor: Colors.white,
       ),
       body: loading ?
-      const CircularProgressIndicator() : Padding(
+      const CourseSkelton() :
+      !loading && courseCount==0 ?
+          SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                    'assets/animation/no_data.json',
+                    width: 200,
+                    height: 200
+                ),
+                const Text('No course added')
+              ],
+            ),
+          ):
+      Padding(
         padding: const EdgeInsets.all(12),
         child: ListView.separated(
           itemCount: courses.length,

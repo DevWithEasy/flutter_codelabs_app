@@ -34,7 +34,7 @@ class GridItem extends StatelessWidget {
             Expanded(
               child: CachedNetworkImage(
                 imageUrl: 'https://flutter-codelabs-api.onrender.com$image',
-                placeholder: (context, url) => const CircularProgressIndicator(),
+                placeholder: (context, url) => Image.asset('assets/images/empty_image.png'),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),

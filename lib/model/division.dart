@@ -10,6 +10,7 @@ class Division{
     required this.categories
   });
 
+
   factory Division.fromMap(Map<String,dynamic> d){
     final categories = (d['categories'] as List<dynamic>).map((cat) {
       return Category.fromMap(cat as Map<String, dynamic>);
