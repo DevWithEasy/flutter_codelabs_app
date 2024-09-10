@@ -80,7 +80,7 @@ class _VideosScreenState extends State<VideosScreen> {
                 width: 200,
                 height: 200
             ),
-            const Text('No course added')
+            const Text('Course videos uploading')
           ],
         ),
       ):

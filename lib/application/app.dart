@@ -1,4 +1,4 @@
-import 'package:code_labs/screen/home_screen.dart';
+import 'package:code_labs/screen/check_screen.dart';
 import 'package:flutter/material.dart';
 
 class CodeLabs extends StatelessWidget {
@@ -13,7 +13,7 @@ class CodeLabs extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: const CheckScreen(),
     );
   }
 }
